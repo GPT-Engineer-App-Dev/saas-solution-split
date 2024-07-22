@@ -1,12 +1,36 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from "react";
+import HeroSection from "./HeroSection";
+import FeaturesSection from "./FeaturesSection";
+import QuotesCarousel from "./QuotesCarousel";
+import ContactSection from "./ContactSection";
 
 const Index = () => {
+  useEffect(() => {
+    const handleNavClick = (e) => {
+      const target = e.target.closest('a[href^="#"]');
+      if (target) {
+        e.preventDefault();
+        const id = target.getAttribute('href').slice(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      }
+    };
+    document.addEventListener('click', handleNavClick);
+    return () => {
+      document.removeEventListener('click', handleNavClick);
+    };
+  }, []);
+
   return (
-    <div className="flex-grow flex justify-center items-center">
-      <div className="text-center">
-        <h1 className="text-3xl">Your Blank Canvas</h1>
-        <p>Chat with the agent to start making edits.</p>
-      </div>
+    <div className="flex flex-col min-h-screen">
+      <HeroSection />
+      <FeaturesSection />
+      <QuotesCarousel />
+      <ContactSection />
     </div>
   );
 };
